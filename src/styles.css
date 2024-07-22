@@ -1,0 +1,173 @@
+/* src/styles.css */
+
+/* General Styles */
+body, html {
+  font-family: 'Inter', sans-serif;
+  background-color: #FFF6E9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Flexbox for body to ensure footer stays at bottom */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar and Footer Styles */
+.navbar, .footer {
+  background-color: #FF7F3E;
+}
+
+.navbar-brand, .nav-link, .footer h5, .footer ul li {
+  color: #fff !important;
+}
+
+.nav-link:hover {
+  color: #ffd54f !important;
+}
+
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Header Styles */
+header {
+  background-color: #FF7F3E;
+  color: white;
+  padding: 20px 0;
+}
+
+header h1 {
+  margin: 0;
+  font-family: 'Kaushan Script', cursive;
+  font-size: 2rem;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #FF7F3E;
+  color: white;
+  padding: 20px 0;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  margin-top: auto;
+}
+
+footer .footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer h5 {
+  margin-bottom: 20px;
+  font-family: 'Kaushan Script', cursive;
+  margin-left: 20px;
+}
+
+footer ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+footer ul li {
+  margin-bottom: 10px;
+  color: #fff !important;
+}
+
+/* Main Content Styles */
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: 20px;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: #ff7043;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+.btn-primary {
+  background-color: #ff7043;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #ff8a65;
+}
+
+/* Form Styles */
+form {
+  margin-top: 20px;
+}
+
+form .form-group {
+  margin-bottom: 15px;
+}
+
+form .form-control {
+  border-radius: 0;
+  border-color: #ccc;
+}
+
+form .form-control:focus {
+  border-color: #ff7043;
+  box-shadow: none;
+}
+
+form .btn-primary {
+  background-color: #ff7043;
+  border: none;
+}
+
+form .btn-primary:hover {
+  background-color: #ff8a65;
+}
+
+/* Media Queries */
+@media (max-width: 767px) {
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  
+  .nav-link {
+    font-size: 1rem;
+  }
+  
+  h1, h2 {
+    font-size: 1.5rem;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+  }
+  
+  .card-text {
+    font-size: 0.875rem;
+  }
+}
+
+
+
+
