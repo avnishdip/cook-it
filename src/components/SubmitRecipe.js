@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 const SubmitRecipe = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   return (
     <Container>
