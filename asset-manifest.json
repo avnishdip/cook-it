@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/cook-it/static/css/main.a78d4a49.css",
-    "main.js": "/cook-it/static/js/main.f825d3e3.js",
-    "static/js/488.75af769d.chunk.js": "/cook-it/static/js/488.75af769d.chunk.js",
+    "main.css": "/cook-it/static/css/main.0f33a2cf.css",
+    "main.js": "/cook-it/static/js/main.7b7d4aaa.js",
+    "static/js/453.e1ee8d4c.chunk.js": "/cook-it/static/js/453.e1ee8d4c.chunk.js",
     "index.html": "/cook-it/index.html",
-    "main.a78d4a49.css.map": "/cook-it/static/css/main.a78d4a49.css.map",
-    "main.f825d3e3.js.map": "/cook-it/static/js/main.f825d3e3.js.map",
-    "488.75af769d.chunk.js.map": "/cook-it/static/js/488.75af769d.chunk.js.map"
+    "main.0f33a2cf.css.map": "/cook-it/static/css/main.0f33a2cf.css.map",
+    "main.7b7d4aaa.js.map": "/cook-it/static/js/main.7b7d4aaa.js.map",
+    "453.e1ee8d4c.chunk.js.map": "/cook-it/static/js/453.e1ee8d4c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a78d4a49.css",
-    "static/js/main.f825d3e3.js"
+    "static/css/main.0f33a2cf.css",
+    "static/js/main.7b7d4aaa.js"
   ]
 }
