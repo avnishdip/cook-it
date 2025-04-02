@@ -1,29 +1,52 @@
 import React from 'react';
-import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './styles/global.css';
+import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Recipes from './components/Recipes';
 import RecipeDetail from './components/RecipeDetail';
 import SubmitRecipe from './components/SubmitRecipe';
-import Professionals from './components/Professionals';
 import Events from './components/Events';
+import About from './components/About';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
-const App = () => {
+function App() {
   return (
-    <Router basename="/">
-      <Header />
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipe/:id" element={<RecipeDetail />} />
-        <Route path="/submit" element={<SubmitRecipe />} />
-        <Route path="/professionals" element={<Professionals />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <div className="d-flex flex-column min-vh-100">
+          <Navbar />
+          <main className="flex-grow-1">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/recipes" element={<Recipes />} />
+              <Route path="/recipe/:id" element={<RecipeDetail />} />
+              <Route path="/submit-recipe" element={<SubmitRecipe />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </main>
+          <Footer />
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 

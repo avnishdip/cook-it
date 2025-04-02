@@ -1,58 +1,246 @@
 // src/components/Recipes.js
 import React, { useState } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaSearch, FaFilter, FaClock, FaUtensils, FaFire } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const recipesData = [
-  { id: 1, title: 'Classic Strawberry Tart', description: 'Delicious tart with fresh strawberries.', imgSrc: 'https://www.deliciousmagazine.co.uk/wp-content/uploads/2018/09/470854-1-eng-GB_simple-french-strawberry-tart.jpg' },
-  { id: 2, title: 'Vegetable Stew', description: 'A hearty and healthy vegetable stew.', imgSrc: 'https://feelgoodfoodie.net/wp-content/uploads/2022/12/Vegetable-Stew-10.jpg' },
-  { id: 3, title: 'Chicken Alfredo', description: 'Creamy Alfredo sauce with tender chicken.', imgSrc: 'https://iwashyoudry.com/wp-content/uploads/2022/08/Chicken-Alfredo-Low-Res-21.jpg' },
-  { id: 4, title: 'Vegan Burger', description: 'A tasty and healthy vegan burger.', imgSrc: 'https://www.wellplated.com/wp-content/uploads/2016/03/Black-Bean-Vegan-Burger-Recipe.jpg' },
-  { id: 5, title: 'Chocolate Cake', description: 'Rich and moist chocolate cake.', imgSrc: 'https://sallysbakingaddiction.com/wp-content/uploads/2013/04/triple-chocolate-cake-4.jpg' },
-  { id: 6, title: 'Caesar Salad', description: 'Fresh salad with Caesar dressing.', imgSrc: 'https://natashaskitchen.com/wp-content/uploads/2019/01/Caesar-Salad-Recipe-3.jpg' },
-  { id: 7, title: 'BBQ Ribs', description: 'Juicy ribs with BBQ sauce.', imgSrc: 'https://www.spendwithpennies.com/wp-content/uploads/2022/06/Oven-Baked-Ribs-SpendWithPennies-4.jpg' },
-  { id: 8, title: 'Pancakes', description: 'Fluffy pancakes with maple syrup.', imgSrc: 'https://www.onceuponachef.com/images/2009/08/pancakes-01.jpg' },
-  { id: 9, title: 'Spaghetti Bolognese', description: 'Classic Italian pasta dish.', imgSrc: 'https://images.themodernproper.com/billowy-turkey/production/posts/2019/Easy-Bolognese-10.jpg?w=1200&q=82&auto=format&fit=crop&dm=1599767200&s=8aad79e65abacad06578e485c8fc51bc' },
-  { id: 10, title: 'Tacos', description: 'Spicy and flavorful tacos.', imgSrc: 'https://tatyanaseverydayfood.com/wp-content/uploads/2023/05/The-Best-Birria-Tacos-Recipe-2.jpg' },
-];
-
 const Recipes = () => {
-  const { t } = useTranslation();
-  const [filter, setFilter] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [sortBy, setSortBy] = useState('popular');
 
-  const filteredRecipes = filter === 'All' ? recipesData : recipesData.filter(recipe => recipe.category === filter);
+  const categories = [
+    { id: 'all', label: 'All Recipes' },
+    { id: 'breakfast', label: 'Breakfast' },
+    { id: 'lunch', label: 'Lunch' },
+    { id: 'dinner', label: 'Dinner' },
+    { id: 'dessert', label: 'Dessert' },
+    { id: 'snacks', label: 'Snacks' },
+    { id: 'vegetarian', label: 'Vegetarian' },
+    { id: 'vegan', label: 'Vegan' }
+  ];
+
+  const sortOptions = [
+    { id: 'popular', label: 'Most Popular' },
+    { id: 'newest', label: 'Newest First' },
+    { id: 'rating', label: 'Highest Rated' },
+    { id: 'time', label: 'Quickest to Make' }
+  ];
+
+  // Mock data for recipes
+  const recipes = [
+    {
+      id: 1,
+      title: 'Classic Chocolate Chip Cookies',
+      category: 'dessert',
+      image: '/images/recipes/cookies.jpg',
+      time: '30 mins',
+      difficulty: 'easy',
+      rating: 4.8,
+      calories: 150
+    },
+    {
+      id: 2,
+      title: 'Mediterranean Quinoa Bowl',
+      category: 'lunch',
+      image: '/images/recipes/quinoa-bowl.jpg',
+      time: '25 mins',
+      difficulty: 'medium',
+      rating: 4.6,
+      calories: 450
+    },
+    {
+      id: 3,
+      title: 'Spicy Thai Curry',
+      category: 'dinner',
+      image: '/images/recipes/thai-curry.jpg',
+      time: '45 mins',
+      difficulty: 'medium',
+      rating: 4.9,
+      calories: 550
+    },
+    // Add more mock recipes as needed
+  ];
+
+  const filteredRecipes = recipes.filter(recipe => {
+    const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || recipe.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const sortedRecipes = [...filteredRecipes].sort((a, b) => {
+    switch (sortBy) {
+      case 'popular':
+        return b.rating - a.rating;
+      case 'newest':
+        return b.id - a.id;
+      case 'rating':
+        return b.rating - a.rating;
+      case 'time':
+        return parseInt(a.time) - parseInt(b.time);
+      default:
+        return 0;
+    }
+  });
 
   return (
-    <Container>
-      <Row className="my-4">
-        <Col>
-          <h2>{t('recipes')}</h2>
-          <Button variant="primary" onClick={() => setFilter('All')}>All</Button>
-          <Button variant="secondary" onClick={() => setFilter('Vegan')}>Vegan</Button>
-          <Button variant="success" onClick={() => setFilter('Vegetarian')}>Vegetarian</Button>
-          <Button variant="warning" onClick={() => setFilter('No Restrictions')}>No Restrictions</Button>
-        </Col>
-      </Row>
-      <Row>
-        {filteredRecipes.map((recipe, index) => (
-          <Col md={4} key={index}>
-            <Card className="mb-4">
-              <Card.Img variant="top" src={recipe.imgSrc} />
-              <Card.Body>
-                <Card.Title>{recipe.title}</Card.Title>
-                <Card.Text>{recipe.description}</Card.Text>
-                <Link to={`/recipe/${recipe.id}`}>
-                  <Button variant="primary">{t('see_more')}</Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <div className="recipes-page">
+      {/* Hero Section */}
+      <section className="recipes-hero py-5">
+        <Container>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-5"
+          >
+            <h1 className="display-4 fw-bold mb-4">Discover Amazing Recipes</h1>
+            <p className="lead">
+              Explore our collection of delicious recipes from around the world.
+              Find inspiration for your next meal!
+            </p>
+          </motion.div>
+        </Container>
+      </section>
+
+      {/* Search and Filter Section */}
+      <section className="search-filter py-4 bg-light">
+        <Container>
+          <Row className="g-3">
+            <Col md={6} lg={4}>
+              <Form.Group>
+                <Form.Control
+                  type="text"
+                  placeholder="Search recipes..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="search-input"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} lg={4}>
+              <Form.Group>
+                <Form.Select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="category-select"
+                >
+                  {categories.map(category => (
+                    <option key={category.id} value={category.id}>
+                      {category.label}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col md={6} lg={4}>
+              <Form.Group>
+                <Form.Select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="sort-select"
+                >
+                  {sortOptions.map(option => (
+                    <option key={option.id} value={option.id}>
+                      {option.label}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      {/* Recipes Grid */}
+      <section className="recipes-grid py-5">
+        <Container>
+          <AnimatePresence>
+            <Row>
+              {sortedRecipes.map((recipe, index) => (
+                <Col md={6} lg={4} key={recipe.id} className="mb-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="recipe-card"
+                    whileHover={{ y: -10 }}
+                  >
+                    <Link to={`/recipe/${recipe.id}`} className="text-decoration-none">
+                      <img
+                        src={recipe.image}
+                        alt={recipe.title}
+                        className="recipe-image"
+                      />
+                      <div className="recipe-content">
+                        <h3 className="h5 mb-2">{recipe.title}</h3>
+                        <div className="recipe-meta">
+                          <span className="me-3">
+                            <FaClock className="me-1" />
+                            {recipe.time}
+                          </span>
+                          <span className="me-3">
+                            <FaUtensils className="me-1" />
+                            {recipe.difficulty}
+                          </span>
+                          <span>
+                            <FaFire className="me-1" />
+                            {recipe.calories} cal
+                          </span>
+                        </div>
+                        <div className="recipe-rating mt-2">
+                          {[...Array(5)].map((_, i) => (
+                            <span
+                              key={i}
+                              className={`star ${i < Math.floor(recipe.rating) ? 'filled' : ''}`}
+                            >
+                              ★
+                            </span>
+                          ))}
+                          <span className="ms-2">{recipe.rating}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                </Col>
+              ))}
+            </Row>
+          </AnimatePresence>
+
+          {sortedRecipes.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-5"
+            >
+              <h3>No recipes found</h3>
+              <p>Try adjusting your search or filters to find what you're looking for.</p>
+            </motion.div>
+          )}
+        </Container>
+      </section>
+
+      {/* Load More Button */}
+      {sortedRecipes.length > 0 && (
+        <section className="load-more py-4">
+          <Container>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="text-center"
+            >
+              <Button variant="outline-primary" size="lg">
+                Load More Recipes
+              </Button>
+            </motion.div>
+          </Container>
+        </section>
+      )}
+    </div>
   );
-}
+};
 
 export default Recipes;
 

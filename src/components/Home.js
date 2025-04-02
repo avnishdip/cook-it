@@ -1,88 +1,227 @@
 // src/components/Home.js
 import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { motion } from 'framer-motion';
+import { FaUtensils, FaBookOpen, FaUsers, FaCalendarAlt } from 'react-icons/fa';
 
 const Home = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  const handleDiscoverClick = () => {
-    navigate('/recipes');
-  };
+  const features = [
+    {
+      icon: <FaUtensils />,
+      title: 'Discover Recipes',
+      description: 'Explore our collection of delicious recipes from around the world.',
+      link: '/recipes'
+    },
+    {
+      icon: <FaBookOpen />,
+      title: 'Learn Cooking',
+      description: 'Master cooking techniques with our step-by-step guides and tutorials.',
+      link: '/tutorials'
+    },
+    {
+      icon: <FaUsers />,
+      title: 'Join Community',
+      description: 'Connect with fellow food enthusiasts and share your culinary journey.',
+      link: '/community'
+    },
+    {
+      icon: <FaCalendarAlt />,
+      title: 'Attend Events',
+      description: 'Participate in cooking workshops and food festivals.',
+      link: '/events'
+    }
+  ];
 
   return (
-    <Container>
-      <Row className="text-center my-4">
-        <Col>
-          <h1>Cooking is easy if you don't over-complicate it!</h1>
-          <p>At <strong>Cook it!</strong> we believe in easy recipes.</p>
-        </Col>
-      </Row>
+    <div className="home">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <Container>
+          <Row className="align-items-center min-vh-75">
+            <Col lg={6}>
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="hero-content"
+              >
+                <h1 className="display-4 fw-bold mb-4">
+                  Discover the Joy of Cooking
+                </h1>
+                <p className="lead mb-4">
+                  Your ultimate destination for exploring, learning, and sharing amazing recipes.
+                  Join our community of food enthusiasts and start your culinary journey today!
+                </p>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    as={Link}
+                    to="/recipes"
+                    variant="primary"
+                    size="lg"
+                    className="me-3"
+                  >
+                    Explore Recipes
+                  </Button>
+                  <Button
+                    as={Link}
+                    to="/submit-recipe"
+                    variant="outline-primary"
+                    size="lg"
+                  >
+                    Share Your Recipe
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </Col>
+            <Col lg={6}>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="hero-image"
+              >
+                <img
+                  src="/images/hero-image.jpg"
+                  alt="Cooking"
+                  className="img-fluid rounded-3 shadow-lg"
+                />
+              </motion.div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
-      <Row>
-        <Col>
-          <img src="https://www.farmboy.ca/wp-content/uploads/2023/05/Picnic-for-4.jpg" alt="Cooking" className="img-fluid" />
-        </Col>
-      </Row>
+      {/* Features Section */}
+      <section className="features-section py-5">
+        <Container>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-5"
+          >
+            <h2 className="display-5 fw-bold mb-4">Why Choose Cook It?</h2>
+            <p className="lead">
+              We provide everything you need to enhance your cooking skills and share your passion for food.
+            </p>
+          </motion.div>
+          <Row>
+            {features.map((feature, index) => (
+              <Col md={6} lg={3} key={index} className="mb-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="feature-card"
+                  whileHover={{ y: -10 }}
+                >
+                  <div className="feature-icon mb-3">
+                    {feature.icon}
+                  </div>
+                  <h3 className="h5 mb-3">{feature.title}</h3>
+                  <p className="mb-4">{feature.description}</p>
+                  <Button
+                    as={Link}
+                    to={feature.link}
+                    variant="outline-primary"
+                    className="w-100"
+                  >
+                    Learn More
+                  </Button>
+                </motion.div>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </section>
 
-      <Row className="text-center my-4">
-        <Col>
-          <p>Food is a language of love and we believe in sharing love. At <strong>Cook it!</strong> you are the master of the kitchen. Learn new recipes and share your recipes. There are no limits! We love to learn about new cultures and spread recipes to love!</p>
-        </Col>
-      </Row>
+      {/* Featured Recipes Section */}
+      <section className="featured-recipes py-5 bg-light">
+        <Container>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-5"
+          >
+            <h2 className="display-5 fw-bold mb-4">Featured Recipes</h2>
+            <p className="lead">
+              Check out some of our most popular recipes from our community.
+            </p>
+          </motion.div>
+          <Row>
+            {[1, 2, 3].map((recipe, index) => (
+              <Col md={4} key={index} className="mb-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="recipe-card"
+                  whileHover={{ y: -10 }}
+                >
+                  <img
+                    src={`/images/recipe-${index + 1}.jpg`}
+                    alt={`Recipe ${index + 1}`}
+                    className="recipe-image"
+                  />
+                  <div className="recipe-content">
+                    <h3 className="h5 mb-2">Delicious Recipe {index + 1}</h3>
+                    <p className="mb-3">
+                      A mouthwatering recipe that will delight your taste buds.
+                    </p>
+                    <Button
+                      as={Link}
+                      to={`/recipe/${index + 1}`}
+                      variant="primary"
+                      className="w-100"
+                    >
+                      View Recipe
+                    </Button>
+                  </div>
+                </motion.div>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </section>
 
-      <Row>
-        <Col>
-          <h2>{t('featured_recipes')}</h2>
-        </Col>
-      </Row>
-
-      <Row>
-        {[1, 2, 3, 4].map((recipe, index) => (
-          <Col md={3} key={index}>
-            <Card className="mb-4">
-              <Card.Img variant="top" src="https://www.eatingwell.com/thmb/tHQnJTQzKASPYcq7uztWrzG7hd0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/one-skillet-cheesy-ground-chicken-pasta-571ba976c8934b75bd995a0c0d292af9.jpg" />
-              <Card.Body>
-                <Card.Title>Creamy Brocolli Penne</Card.Title>
-                <Card.Text>Perfect for Date Night</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-
-      <Row className="text-center my-4">
-        <Col>
-          <Button variant="primary" onClick={handleDiscoverClick}>Discover</Button>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <h2>{t('home_chefs_reviews')}</h2>
-        </Col>
-      </Row>
-
-      <Row>
-        {[
-          { name: 'Levi', review: t('so_easy'), role: 'Stay-at-home husband' },
-          { name: 'Mikasa', review: t('wish_found_earlier'), role: 'Retired' },
-          { name: 'Armin', review: t('does_not_lack_anything'), role: 'Amateur chef' },
-        ].map((review, index) => (
-          <Col md={4} key={index}>
-            <Card className="mb-4">
-              <Card.Body>
-                <Card.Text>"{review.review}"</Card.Text>
-                <Card.Footer>{review.name} - {review.role}</Card.Footer>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+      {/* Newsletter Section */}
+      <section className="newsletter-section py-5">
+        <Container>
+          <Row className="justify-content-center">
+            <Col lg={8} className="text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h2 className="display-5 fw-bold mb-4">Stay Updated</h2>
+                <p className="lead mb-4">
+                  Subscribe to our newsletter to receive the latest recipes, cooking tips, and event updates.
+                </p>
+                <form className="newsletter-form">
+                  <div className="input-group mb-3">
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="Enter your email"
+                    />
+                    <Button variant="primary" type="submit">
+                      Subscribe
+                    </Button>
+                  </div>
+                </form>
+              </motion.div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </div>
   );
-}
+};
 
 export default Home;
