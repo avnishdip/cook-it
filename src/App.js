@@ -1,6 +1,5 @@
-// src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -12,15 +11,16 @@ import Events from './components/Events';
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/">
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route exact path="/" element={<Home />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/recipe/:id" element={<RecipeDetail />} />
         <Route path="/submit" element={<SubmitRecipe />} />
         <Route path="/professionals" element={<Professionals />} />
         <Route path="/events" element={<Events />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Footer />
     </Router>
@@ -28,5 +28,4 @@ const App = () => {
 }
 
 export default App;
-
 
